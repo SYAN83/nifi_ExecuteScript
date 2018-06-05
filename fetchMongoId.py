@@ -1,4 +1,4 @@
-#!./venv/bin/python3
+#!/home/ubuntu/nifi_examples/nifi_ExecuteScript/venv/bin/python3
 
 """
 FetchMongoId
@@ -24,10 +24,12 @@ parser.add_argument('-l', '--limit',
                     type=int, default=0,
                     help='Limited by the number of the most recent inserted documents.')
 
+# parse arguments
 args = parser.parse_args()
-
-mongo = MongoUtils(uri=args.uri,
-                   database=args.database,
-                   collection=args.collection)
+# connect to mongo
+mongo = MongoUtils(uri=args.uri.strip(),
+                   database=args.database.strip(),
+                   collection=args.collection.strip())
+# return batches
 for batch in mongo.fetch_id(limit=args.limit):
     print(batch)
