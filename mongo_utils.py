@@ -21,13 +21,19 @@ class MongoUtils(object):
         for batch in batches:
             yield [record['_id'] for record in bson.decode_all(batch)]
 
+    def insert(self, data):
+        documents = json.loads(data)
+        print(documents)
+        resp = self._client.insert_many(documents=documents)
+        print(resp)
+
     def close(self):
         self.client.close()
 
 
 if __name__ == '__main__':
-    mongo = MongoUtils(uri='mongodb://jobs_user_readonly:jobPortalRead@ec2-52-14-242-71.us-east-2.compute.amazonaws.com:27017/',
+    mongo = MongoUtils(uri='mongodb://jobs_user:jobFreshStart@ec2-52-14-242-71.us-east-2.compute.amazonaws.com:27017/',
                        database='jobs',
-                       collection='job_location')
-    for batch in mongo.fetch_id(limit=20):
-        print(batch)
+                       collection='nifi_post_test')
+    data = b'[{"abc": "value1", "jobs": "value1"},{"def": "value2", "jobs": "value2"}]'
+    mongo.insert(data=data)

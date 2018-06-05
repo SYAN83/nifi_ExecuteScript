@@ -13,16 +13,17 @@ import sys
 import argparse
 from mongo_utils import MongoUtils
 
-parser = argparse.ArgumentParser(description='test')
+parser = argparse.ArgumentParser(description='Return the Mongo document IDs as a list.')
 parser.add_argument('-u', '--uri',
                     required=True, help='Mongo URI')
 parser.add_argument('-d', '--database',
-                    required=True, help='Mongo Database')
+                    required=True, help='Name of the Mongo Database')
 parser.add_argument('-c', '--collection',
-                    required=True, help='Mongo Collection')
+                    required=True, help='Name of the Mongo Collection')
 parser.add_argument('-l', '--limit',
                     type=int, default=0,
-                    help='Fetch Limit')
+                    help='Limited by the number of the most recent inserted documents.')
+
 # parse arguments
 args = parser.parse_args()
 # connect to mongo
