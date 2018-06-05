@@ -1,4 +1,4 @@
-#!/home/ubuntu/nifi_examples/nifi_ExecuteScript/venv/bin/python3
+#!./venv/bin/python3
 
 """
 FetchMongoId
@@ -9,7 +9,7 @@ ExecuteStreamCommand Processor Python script
 # NiFi version: 1.6.0
 # params: -u<uri>;-d<database>;-c<collection>[;-l<limit>]
 
-
+import sys
 import argparse
 from mongo_utils import MongoUtils
 
@@ -30,5 +30,10 @@ mongo = MongoUtils(uri=args.uri.strip(),
                    database=args.database.strip(),
                    collection=args.collection.strip())
 # return batches
-for batch in mongo.fetch_id(limit=args.limit):
-    print(batch)
+try:
+    for batch in mongo.fetch_id(limit=args.limit):
+        print(batch)
+    sys.exit(0)
+except Exception as e:
+    print(e)
+    sys.exit(1)
