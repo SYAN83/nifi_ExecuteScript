@@ -13,6 +13,10 @@ class MongoUtils(object):
     def db_connect(uri, database, collection):
         return pymongo.MongoClient(uri)[database][collection]
 
+    def fetch(self, skip=0, limit=0):
+        for record in self._client.find(skip=skip, limit=limit, show_record_id=False):
+            yield record
+
     def fetch_id(self, limit=0):
         batches = self._client.find_raw_batches(
             projection={"_id":1},

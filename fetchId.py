@@ -25,9 +25,9 @@ class PyStreamCallback(StreamCallback):
     def process(self, inputStream, outputStream):
         obj = json.loads(IOUtils.toString(inputStream, StandardCharsets.UTF_8))
         if isinstance(obj, dict):
-            text = obj.get('_id', 'none')
+            text = json.dumps({"_id": obj.get("_id")})
         elif isinstance(obj, list):
-            text = str([x.get('_id', 'none') for x in obj])
+            text = json.dumps([{"_id": x.get("_id")} for x in obj])
         else:
             text = 'none'
         outputStream.write(bytearray(text.encode('utf-8')))
