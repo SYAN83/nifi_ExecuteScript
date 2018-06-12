@@ -35,9 +35,3 @@ class MongoUtils(object):
         self.client.close()
 
 
-if __name__ == '__main__':
-    mongo = MongoUtils(uri='mongodb://jobs_user:jobFreshStart@ec2-52-14-242-71.us-east-2.compute.amazonaws.com:27017/',
-                       database='jobs',
-                       collection='nifi_post_test')
-    data = b'[{"abc": "value1", "jobs": "value1"},{"def": "value2", "jobs": "value2"}]'
-    mongo.insert(data=data)
